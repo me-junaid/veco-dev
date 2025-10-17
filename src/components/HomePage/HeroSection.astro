@@ -1,0 +1,155 @@
+---
+import { Image } from "astro:assets";
+import gift from "../../assets/images/christmas-gift.gif";
+import truck from "../../assets/images/delivery-truck.gif";
+import credit from "../../assets/images/credit-card.gif";
+import { categoryData } from "../../data/Items.js";
+import ScrollItems from "./ScrollItems.astro";
+---
+
+<style>
+  /* Simple fade-in animation for the item panels */
+  .items-panel {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Styling for the active category card */
+  .category-card.is-active {
+    border-color: #bf9b42;
+    transform: scale(1.05);
+  }
+</style>
+
+<section class="py-16 sm:py-20 relative overflow-x-hidden">
+  <!-- Decorative GIF: Hidden on mobile to prevent layout issues -->
+  <Image
+    src={gift}
+    alt="Gift animation"
+    class="block absolute top-5 md:top-10 left-20 h-[70px] w-[70px] -z-10"
+  />
+
+  <!-- Top section with mobile-first layout -->
+  <div class="container mx-auto px-4 sm:px-8">
+    <div
+      class="flex flex-col lg:flex-row gap-8 lg:gap-12 justify-between items-center text-center lg:text-left"
+    >
+      <div class="pl-4 pt-5 md:pl-20">
+        <h2
+          class="text-4xl sm:text-5xl font-semibold bg-gradient-to-r from-pink-400 via-orange-500 to-[#bf9b42] bg-clip-text text-transparent"
+        >
+          Premium Gifts in Dubai.
+        </h2>
+        <p class="mt-3">35k+ Businesses Served — 200k+ Deliveries — Same-Day Printing in Dubai</p>
+      </div>
+      <div class="flex-col gap-4 hidden md:flex">
+        <div class="flex items-center rounded-full pr-3">
+          <p
+            class="bg-[#bf9b42] px-4 py-2 rounded-full font-semibold w-[150px] text-center text-sm"
+          >
+            On Time Delivery
+          </p>
+          <Image
+            src={truck}
+            alt="Delivery truck animation"
+            class="h-12 w-12 ml-2"
+          />
+        </div>
+        <div class="flex items-center rounded-full pr-3">
+          <p
+            class="bg-[#bf9b42] px-4 py-2 rounded-full font-semibold w-[150px] text-center text-sm"
+          >
+            90 Days Credit
+          </p>
+          <Image
+            src={credit}
+            alt="Credit card animation"
+            class="h-12 w-12 ml-2"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category selector and items display section -->
+  <div id="product-category-section" class="pt-10 sm:pt-20">
+    <ScrollItems />
+
+    <!-- Items display area, controlled by JavaScript -->
+    <div
+      class="items-display-area mt-6 md:mt-12 relative container mx-auto px-4 sm:px-18"
+    >
+      {
+        categoryData.map((category, index) => (
+          <div
+            data-panel-id={category.id}
+            class:list={["items-panel", { hidden: index > 0 }]}
+          >
+            <h3 class="text-2xl font-bold mb-6 text-gray-800">
+              Items in: <span class="text-orange-500">{category.title}</span>
+            </h3>
+            <div class="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-8 gap-6">
+              {category.items.map((item) => (
+                <a href={item.href} class="group block">
+                  <div class="bg-white p-2 sm:p-6 rounded-lg  h-full group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300">
+                    <div class="aspect-square rounded-md overflow-hidden flex items-center justify-center ">
+                      <Image
+                        src={category.imageUrl}
+                        alt={item.name}
+                        class="object-cover"
+                      />
+                    </div>
+                    <h4 class="text-sm font-bold text-gray-900 text-center">
+                      {item.name}
+                    </h4>
+                    {/* <p class="mt-2 text-gray-600 text-sm">{item.description}</p> */}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const categorySection = document.getElementById("product-category-section");
+    if (!categorySection) return;
+
+    const categoryCards = categorySection.querySelectorAll(".category-card");
+    const itemPanels = categorySection.querySelectorAll(".items-panel");
+
+    categoryCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        const categoryId = (card as HTMLElement).dataset.categoryId;
+
+        // Update active card
+        categoryCards.forEach((c) => c.classList.remove("is-active"));
+        card.classList.add("is-active");
+
+        // Update visible panel
+        itemPanels.forEach((panel) => {
+          const panelEl = panel as HTMLElement;
+          if (panelEl.dataset.panelId === categoryId) {
+            panelEl.classList.remove("hidden");
+          } else {
+            panelEl.classList.add("hidden");
+          }
+        });
+      });
+    });
+  });
+</script>

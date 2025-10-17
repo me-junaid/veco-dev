@@ -1,0 +1,100 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/images/vexologo.png";
+---
+
+<style>
+  /* Prevents the main content from scrolling when the mobile menu is open */
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  #mobile-menu {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  #mobile-menu.is-hidden {
+    opacity: 0;
+    transform: translateY(-1rem);
+    pointer-events: none;
+  }
+
+  /* Refined icon transition */
+  .icon {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    position: absolute; /* Keep icons layered in the same spot */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the icons perfectly */
+  }
+  .is-hidden-icon {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+    pointer-events: none;
+  }
+</style>
+
+<header class="h-20 shadow-md flex items-center px-4 sm:px-8 justify-between bg-[#093832] fixed top-0 left-0 right-0 z-20">
+  <div class="flex items-center">
+    <a href="/" aria-label="Vexo Home">
+      <Image src={logo} alt="Vexo Logo" class="h-16 w-16" />
+    </a>
+  </div>
+
+  <nav class="hidden md:flex gap-12 list-none p-4 text-white">
+    <li><a href="/products" class="text-sm font-semibold hover:text-gray-300 transition-colors">Products</a></li>
+    <li><a href="/why-us" class="text-sm font-semibold text-gray-300 hover:text-white transition-colors">Why Us?</a></li>
+    <li><a href="/quote" class="text-sm font-semibold text-gray-300 hover:text-white transition-colors">Get a Quote?</a></li>
+  </nav>
+
+  <!-- KEY CHANGE 1: A single button for better accessibility and simplicity -->
+  <div class="md:hidden">
+    <button
+      id="menu-toggle-button"
+      type="button"
+      class="text-white focus:outline-none rounded-md p-1 relative h-8 w-8"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
+      <span class="sr-only">Open main menu</span>
+      <!-- Menu Icon (Hamburger) -->
+      <svg id="icon-menu" class="icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      <!-- Close Icon (X) -->
+      <svg id="icon-close" class="icon h-6 w-6 is-hidden-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="is-hidden md:hidden bg-[#093832]/95 backdrop-blur-sm fixed top-20 left-0 right-0 z-10 shadow-lg">
+  <nav class="flex flex-col items-center gap-4 list-none p-6 text-white">
+    <li><a href="/products" class="block py-3 text-base font-semibold hover:text-gray-300">Products</a></li>
+    <li><a href="/why-us" class="block py-3 text-base font-semibold text-gray-300 hover:text-white">Why Us?</a></li>
+    <li><a href="/quote" class="block py-3 text-base font-semibold text-gray-300 hover:text-white">Get a Quote?</a></li>
+  </nav>
+</div>
+
+<!-- KEY CHANGE 2: Simplified and corrected JavaScript -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleButton = document.getElementById("menu-toggle-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const iconMenu = document.getElementById("icon-menu");
+    const iconClose = document.getElementById("icon-close");
+
+    if (toggleButton && mobileMenu && iconMenu && iconClose) {
+      toggleButton.addEventListener("click", () => {
+        // Toggle all classes at once for simplicity and reliability
+        mobileMenu.classList.toggle("is-hidden");
+        iconMenu.classList.toggle("is-hidden-icon");
+        iconClose.classList.toggle("is-hidden-icon");
+        
+        // Prevent body scroll when menu is open
+        document.body.classList.toggle("menu-open");
+        
+        // Update ARIA attribute for accessibility
+        const isExpanded = toggleButton.getAttribute("aria-expanded") === "true";
+        toggleButton.setAttribute("aria-expanded", (!isExpanded).toString());
+      });
+    }
+  });
+</script>

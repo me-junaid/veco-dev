@@ -1,0 +1,164 @@
+---
+import { Image } from "astro:assets";
+import vexoLogo from "../assets/images/vexologo.png"
+
+const currentYear = new Date().getFullYear();
+
+const sitemap = {
+	company: [
+		{ name: "Home", href: "/" },
+		{ name: "Products", href: "/projects" },
+		{ name: "About Us", href: "/about" },
+		{ name: "Contact Us", href: "/contact" },
+	],
+	offerings: [
+  { name: "Fashion and Textiles", href: "/fashion-textiles" },
+  { name: "Office and Store Branding", href: "/office-store-branding" },
+  { name: "Frames", href: "/frames" },
+  { name: "Vehicle Graphics", href: "/vehicle-graphics" },
+  { name: "Signages", href: "/signages" },
+  { name: "Flags", href: "/flags" },
+  { name: "Backdrop and Exhibition", href: "/backdrop-exhibition" },
+  { name: "Corporate Gifts", href: "/corporate-gifts" },
+  { name: "Stickers and Labels", href: "/stickers-labels" },
+  { name: "Print and Marketing", href: "/print-marketing" },
+  { name: "Voucher Books / NCR", href: "/voucher-books-ncr" },
+],
+
+};
+
+// --- UPDATED: Using Bootstrap Icon class names ---
+const social = [
+	{
+		name: "Facebook",
+		href: "#",
+		iconClass: "bi bi-facebook", // The icon's class name
+	},
+	{
+		name: "Instagram",
+		href: "#",
+		iconClass: "bi bi-instagram",
+	},
+	{
+		name: "LinkedIn",
+		href: "#",
+		iconClass: "bi bi-linkedin",
+	},
+	{
+		name: "YouTube",
+		href: "#",
+		iconClass: "bi bi-twitter-x",
+	}
+];
+---
+
+<footer class="bg-[#093832] text-white">
+	<div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+			<!-- Column 1: Company Info & Socials -->
+			<div class="md:col-span-2 lg:col-span-1">
+				<a
+					href="/"
+					class="text-2xl font-bold hover:text-yellow-500 transition-colors"
+				>
+					<Image src={vexoLogo} alt="Vexo print Logo" class="h-[100px] w-fit -m-[28px] pl-4"/>
+				</a>
+				<p class="mt-4 text-sm text-gray-400">
+					Premium Gifts in Dubai.
+				</p>
+				<div class="mt-6 flex space-x-4">
+					{
+						social.map((item) => (
+							<a
+								href={item.href}
+								class="text-gray-400 hover:text-yellow-500"
+								aria-label={item.name}
+							>
+								<span class="sr-only">{item.name}</span>
+								{/* --- UPDATED: Rendering logic for Bootstrap Icons --- */}
+								<i class:list={[item.iconClass, "text-2xl"]} />
+							</a>
+						))
+					}
+				</div>
+			</div>
+
+			<!-- Column 2: Quick Links -->
+			<div>
+				<h3 class="text-sm font-semibold leading-6 uppercase tracking-wider text-[#bf9b42]">
+					Company
+				</h3>
+				<ul role="list" class="mt-4 space-y-2">
+					{
+						sitemap.company.map((item) => (
+							<li>
+								<a
+									href={item.href}
+									class="text-base text-gray-300 hover:text-yellow-500 transition-colors"
+								>
+									{item.name}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<!-- Column 3: Offerings -->
+			<div>
+				<h3 class="text-sm font-semibold leading-6 uppercase tracking-wider text-[#bf9b42]">
+					Our Offerings
+				</h3>
+				<ul role="list" class="mt-4 space-y-2">
+					{
+						sitemap.offerings.map((item) => (
+							<li>
+								<a
+									href={item.href}
+									class="text-base text-gray-300 hover:text-yellow-500 transition-colors"
+								>
+									{item.name}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<!-- Column 4: Contact -->
+			<div>
+				<h3 class="text-sm font-semibold leading-6 uppercase tracking-wider text-[#bf9b42]">
+					Get in Touch
+				</h3>
+				<address class="mt-4 space-y-6 text-base text-gray-300 not-italic">
+					<p>
+						No. ABCD
+					</p>
+					<p>
+						<a
+							href="tel:+919876543210"
+							class="hover:text-yellow-500 transition-colors"
+						>
+							+91 9876543210
+						</a>
+					</p>
+					<p>
+						<a
+							href="mailto:contact@vexoprint.com"
+							class="hover:text-yellow-500 transition-colors"
+						>
+							contact@vexoprint.com
+						</a>
+					</p>
+				</address>
+			</div>
+		</div>
+
+		<!-- Copyright Section -->
+		<div class="mt-16 pt-8 border-t border-gray-200/10 text-center">
+			<p class="text-sm text-gray-500">
+				© {currentYear} Vexoprint. All rights reserved.
+			</p>
+		</div>
+	</div>
+</footer>
