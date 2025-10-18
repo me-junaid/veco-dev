@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import ContactLayout from "../components/HomePage/ContactLayout.astro";
 import HeroSection from "../components/HomePage/HeroSection.astro";
 import UploadImage from "../components/HomePage/UploadImage.astro";
+import Testimonials from "../components/HomePage/Testimonials.astro";
 ---
 
 <html lang="en">
@@ -13,13 +14,15 @@ import UploadImage from "../components/HomePage/UploadImage.astro";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Vexo | Your Gift Partner</title>
 	</head>
 	<body>
 		<Header />
 		<ContactLayout />
 		<HeroSection />
-		<UploadImage />
+		<Testimonials/>
+
+		<!-- <UploadImage /> -->
 
 		<Footer />
 	</body>

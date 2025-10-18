@@ -57,18 +57,18 @@ import { categoryData } from "../../data/Items.js"; // Adjust the import path as
         <div
           data-category-id={category.id}
           class:list={[
-            "category-card min-w-[120px] md:min-w-[150px] border-2 md:border-4 hover:border-[#d3ffd0] rounded-2xl border-transparent transition duration-300 cursor-pointer py-5 px-1 md:px-2",
+            "category-card border-2 md:border-2 hover:border-[#d3ffd0] rounded-2xl border-transparent transition  cursor-pointer py-2 px-2 md:px-4 flex flex-col justify-center items-center",
             { "is-active": index === 0 },
           ]}
         >
-          <div class="flex justify-center items-center h-[100px] relative overflow-hidden pointer-events-none transform  transition-transform duration-300">
+          <div class="flex justify-center items-center w-[50px] relative overflow-hidden pointer-events-none transform  transition-transform">
             <Image
               src={category.imageUrl}
               alt={category.title}
               class="max-h-full max-w-full"
             />
           </div>
-          <p class="font-semibold text-center pointer-events-none mt-2">
+          <p class="font-semibold text-center pointer-events-none mt-2 text-sm">
             {category.title}
           </p>
         </div>
