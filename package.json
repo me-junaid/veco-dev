@@ -12,6 +12,7 @@
     "@astrojs/preact": "^4.1.1",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.14.1",
+    "bootstrap-icons": "^1.13.1",
     "preact": "^10.27.2",
     "tailwindcss": "^4.1.13"
   }

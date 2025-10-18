@@ -1,0 +1,49 @@
+---
+// Storing the statistics in an array of objects.
+// This makes the code cleaner, more maintainable, and easier to add or remove stats.
+const stats = [
+  {
+    value: "20k+",
+    label: "Customizable Products",
+  },
+  {
+    value: "200k+",
+    label: "Orders Delivered",
+  },
+  {
+    value: "35k+",
+    label: "Businesses Trust Us",
+  },
+];
+---
+
+<section class="py-16 md:py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h2 class="text-base font-semibold text-[#bf9b42] uppercase tracking-wider">
+        Why Us
+      </h2>
+      <p class="mt-2 text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
+        We Offer a Wide Range of<br />Printing Services
+      </p>
+    </div>
+
+    <!-- 
+      - Switched to a list (ul/li) for better semantics.
+      - On mobile (default), stats are in a vertical column (`flex-col`).
+      - On medium screens and up (`md:`), they switch to a horizontal row.
+    -->
+    <ul class="mt-12 flex flex-col items-center gap-10 md:flex-row md:justify-around">
+      {stats.map(stat => (
+        <li class="text-center">
+          <p class="text-4xl lg:text-5xl font-bold text-[#bf9b42]">
+            {stat.value}
+          </p>
+          <p class="mt-1 text-lg text-gray-700">
+            {stat.label}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,87 @@
+---
+import { Image } from "astro:assets";
+import sampleImage from "../../assets/images/Fashion and Textiles/Pillow Cover-04.jpg";
+---
+
+<style>
+  /* 
+    This CSS sets up a fade-in-up animation. The JavaScript below
+    will apply the `is-visible` class when the section is scrolled into view.
+  */
+  #gateway-section .fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  #gateway-section.is-visible .fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Stagger the animation for a more dynamic effect */
+  #gateway-section.is-visible .fade-in-up:nth-child(2) { transition-delay: 100ms; }
+  #gateway-section.is-visible .fade-in-up:nth-child(3) { transition-delay: 200ms; }
+  #gateway-section.is-visible .fade-in-up:nth-child(4) { transition-delay: 300ms; }
+  #gateway-section.is-visible .fade-in-up:nth-child(5) { transition-delay: 400ms; }
+</style>
+
+<section id="gateway-section" class="pt-16 sm:py-20">
+  <div
+    class="max-w-7xl mx-auto bg-black p-6 sm:p-10 lg:p-12 rounded-t-3xl md:rounded-[60px] lg:rounded-[80px] grid md:grid-cols-2 gap-8 md:gap-12 items-center"
+  >
+    <!-- Left Image with Hover Effect -->
+    <div class="fade-in-up group overflow-hidden rounded-2xl md:rounded-[40px] lg:rounded-[60px]">
+      <Image
+        src={sampleImage}
+        alt="A woman inspecting high-quality printed fabrics with vibrant colors."
+        class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+      />
+    </div>
+
+    <!-- Right Text Content -->
+    <div class="text-white">
+      <h2 class="fade-in-up text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-5">
+        Your Gateway to Flawless Printing Solutions
+      </h2>
+
+      <p class="fade-in-up text-gray-300 mb-4 leading-relaxed">
+        At 64 sec, our team of professionals are masters in the art of printing technology, ensuring your projects are handled with expertise and finesse. We provide dynamic and innovative solutions for every item you want to print.
+      </p>
+
+      <p class="fade-in-up text-gray-300 mb-8 leading-relaxed">
+        As a leading cost-effective digital network, we handle complex mass printing for businesses of all sizes. Whether your requirements are big or small, conventional or custom, we have the resources to meet them.
+      </p>
+
+      <a
+        href="https://wa.me/+917736850015"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="fade-in-up inline-block ml-auto bg-[#E2B649] text-black font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:bg-[#d0a23b] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:ring-[#E2B649]"
+      >
+        CONTACT US
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // This script uses the Intersection Observer API to trigger the animation
+  // when the component scrolls into the viewport.
+  const section = document.getElementById("gateway-section");
+
+  // Only create and use the observer if the section exists to avoid null issues.
+  if (section) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          section.classList.add("is-visible");
+          // Stop observing once the animation is triggered to save resources.
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1 // Trigger when 10% of the element is visible
+    });
+
+    observer.observe(section);
+  }
+</script>
