@@ -1,0 +1,34 @@
+---
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+
+const { title = "My Astro Site", description = "Welcome to my Astro site" } =
+  Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/png" href="/src/assets/images/vexologo.png" />
+    <!-- Example: Include a global stylesheet -->
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+
+  <body class="font-sans bg-gray-50 text-gray-900">
+    <!-- Header -->
+    <Header />
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-6">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <Footer />
+  </body>
+</html>

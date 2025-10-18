@@ -1,0 +1,205 @@
+---
+import { Image } from "astro:assets";
+type ImageMetadata = any; // Workaround for older Astro versions
+
+// Props are updated to accept multiple images and a price
+export interface Props {
+  productName: string;
+  productImages: ImageMetadata[]; // Now accepts an array of images
+  productTagline: string;
+  productDescription: string;
+  features: string[];
+  whatsAppNumber: string;
+  price: number;
+  currency?: string; // Optional currency symbol
+}
+
+const {
+  productName,
+  productImages,
+  productTagline,
+  productDescription,
+  features,
+  whatsAppNumber,
+  price,
+  currency = "AED", // Default currency
+} = Astro.props;
+
+// The first image in the array will be the default main image
+const mainImage = productImages[0];
+---
+
+<style>
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type="number"] { -moz-appearance: textfield; }
+
+  .sticky-cta {
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    visibility: hidden;
+  }
+  .sticky-cta.is-visible {
+    transform: translateY(0);
+    visibility: visible;
+  }
+  
+  /* Style for the active thumbnail */
+  .thumbnail-button.is-active {
+    border-color: #E2B649;
+    outline: 2px solid #E2B649;
+  }
+</style>
+
+<section class="bg-white rounded-4xl py-9">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start">
+    
+    <!-- Left Column: Image Gallery (takes 2/5 of the width on large screens) -->
+    <div class="lg:col-span-2 w-full sticky top-24 bg-white">
+      <div class="aspect-square w-full mb-4">
+        <Image
+          id="main-product-image"
+          src={mainImage}
+          alt={`Main image of ${productName}`}
+          class="w-full h-full object-cover rounded-2xl shadow-lg"
+        />
+      </div>
+      <!-- Thumbnails -->
+      <div class="grid grid-cols-5 gap-3">
+        {productImages.map((img, index) => (
+          <button
+            type="button"
+            class:list={[
+              "thumbnail-button aspect-square rounded-md overflow-hidden border-2 border-transparent transition hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#E2B649]",
+              { "is-active": index === 0 }
+            ]}
+            data-image-src={img.src}
+            aria-label={`View image ${index + 1}`}
+          >
+            <Image src={img} alt={`Thumbnail of ${productName} view ${index + 1}`} class="w-full h-full object-cover" />
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Right Column: Product Details & CTA (takes 3/5 of the width) -->
+    <div class="lg:col-span-3 flex flex-col">
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
+        {productName}
+      </h1>
+      <p class="mt-2 text-lg text-gray-600">{productTagline}</p>
+
+      <!-- Price Section -->
+      <div class="mt-5">
+        <span class="text-3xl font-bold text-gray-900">{currency} {price.toFixed(2)}</span>
+        <span class="text-sm text-gray-500 ml-2">per item</span>
+      </div>
+
+      <hr class="my-6 border-gray-200" />
+
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800">Description</h2>
+        <p class="mt-3 text-gray-700 leading-relaxed">{productDescription}</p>
+      </div>
+
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold text-gray-800">Features</h2>
+        <ul class="mt-3 list-disc list-inside space-y-2 text-gray-700">
+          {features.map((feature) => <li>{feature}</li>)}
+        </ul>
+      </div>
+
+      <!-- Main Call to Action Section -->
+      <div id="main-cta-section" class="mt-8 py-2 border-t border-gray-200 sticky bottom bg-white shadow-t">
+        <label for="quantity-input-main" class="block text-lg font-semibold text-gray-800 mb-3">
+          Select Quantity
+        </label>
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <div class="flex items-center border border-gray-300 rounded-lg w-full sm:w-auto">
+            <button type="button" aria-label="Decrease quantity" class="quantity-minus px-5 py-3 text-xl font-bold text-gray-700 hover:bg-gray-100 active:bg-gray-200 rounded-l-lg transition">-</button>
+            <input type="number" class="quantity-input w-full sm:w-20 text-center font-bold text-lg border-x border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#E2B649]" value="1" min="1" id="quantity-input-main"/>
+            <button type="button" aria-label="Increase quantity" class="quantity-plus px-5 py-3 text-xl font-bold text-gray-700 hover:bg-gray-100 active:bg-gray-200 rounded-r-lg transition">+</button>
+          </div>
+          <a target="_blank" rel="noopener noreferrer" class="whatsapp-link w-full sm:flex-grow text-center bg-[#E2B649] text-black font-bold px-6 py-4 rounded-lg transition-all duration-300 hover:bg-[#d0a23b] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#E2B649]" href="#">Order on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky CTA for Mobile (Unchanged) -->
+<div id="sticky-cta-bar" class="sticky-cta md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm p-4 border-t border-gray-200 shadow-lg z-30">
+  <div class="flex items-center gap-4 max-w-7xl mx-auto">
+    <div class="flex items-center border border-gray-300 rounded-lg">
+      <button type="button" aria-label="Decrease quantity" class="quantity-minus px-4 py-2 text-xl font-bold text-gray-700 active:bg-gray-200 rounded-l-lg">-</button>
+      <input type="number" class="quantity-input w-16 text-center font-bold text-lg border-x" value="1" min="1" aria-label="Quantity"/>
+      <button type="button" aria-label="Increase quantity" class="quantity-plus px-4 py-2 text-xl font-bold text-gray-700 active:bg-gray-200 rounded-r-lg">+</button>
+    </div>
+    <a target="_blank" rel="noopener noreferrer" class="whatsapp-link flex-grow text-center bg-[#E2B649] text-black font-bold px-5 py-3 rounded-lg" href="#">Order Now</a>
+  </div>
+</div>
+
+<script define:vars={{ productName, whatsAppNumber, price, currency }}>
+  function initializeProductPage() {
+    // --- Image Gallery Logic ---
+    const mainImage = document.getElementById("main-product-image");
+    const thumbnails = document.querySelectorAll(".thumbnail-button");
+
+    thumbnails.forEach(thumb => {
+      thumb.addEventListener("click", () => {
+        // Set the main image src to the clicked thumbnail's data-src
+        mainImage.src = thumb.dataset.imageSrc;
+        
+        // Update active state for thumbnails
+        thumbnails.forEach(t => t.classList.remove("is-active"));
+        thumb.classList.add("is-active");
+      });
+    });
+
+    // --- CTA & Quantity Logic ---
+    const minusBtns = document.querySelectorAll(".quantity-minus");
+    const plusBtns = document.querySelectorAll(".quantity-plus");
+    const quantityInputs = document.querySelectorAll(".quantity-input");
+    const whatsAppLinks = document.querySelectorAll(".whatsapp-link");
+    const mainCtaSection = document.getElementById("main-cta-section");
+    const stickyCtaBar = document.getElementById("sticky-cta-bar");
+
+    if (!mainCtaSection || !stickyCtaBar) return;
+
+    let currentQuantity = 1;
+
+    const updateAll = () => {
+      quantityInputs.forEach(input => (input.value = currentQuantity));
+      
+      const totalPrice = (currentQuantity * price).toFixed(2);
+      const message = `Hello, I'd like to order ${currentQuantity} of the "${productName}". The total price is ${currency} ${totalPrice}.`;
+      const encodedMessage = encodeURIComponent(message);
+      const url = `https://wa.me/${whatsAppNumber}?text=${encodedMessage}`;
+      
+      whatsAppLinks.forEach(link => (link.href = url));
+    };
+
+    minusBtns.forEach(btn => btn.addEventListener("click", () => { if (currentQuantity > 1) { currentQuantity--; updateAll(); } }));
+    plusBtns.forEach(btn => btn.addEventListener("click", () => { currentQuantity++; updateAll(); }));
+
+    quantityInputs.forEach(input => {
+      input.addEventListener("change", () => {
+        let newValue = parseInt(input.value);
+        currentQuantity = (!isNaN(newValue) && newValue >= 1) ? newValue : 1;
+        updateAll();
+      });
+    });
+
+    // --- Sticky CTA Observer ---
+    const observer = new IntersectionObserver(
+      ([entry]) => { stickyCtaBar.classList.toggle("is-visible", !entry.isIntersecting); },
+      { rootMargin: "0px 0px -150px 0px" }
+    );
+    observer.observe(mainCtaSection);
+
+    // --- Initial State ---
+    updateAll();
+  }
+
+  document.addEventListener("DOMContentLoaded", initializeProductPage);
+</script>
