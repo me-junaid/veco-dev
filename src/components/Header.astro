@@ -6,8 +6,11 @@ import logo from "../assets/images/vexologo.png";
 const navLinks = [
   { href: "/products", text: "Products" },
   { href: "/why-us", text: "Why Us?" },
+  { href: "/why-us", text: "Help is here" },
   { href: "/quote", text: "Get a Quote?" },
 ];
+
+const currentPath = Astro.url.pathname;
 ---
 
 <style>
@@ -15,7 +18,9 @@ const navLinks = [
     overflow: hidden;
   }
   #mobile-menu {
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transition:
+      transform 0.3s ease-in-out,
+      opacity 0.3s ease-in-out;
   }
   #mobile-menu.is-hidden {
     opacity: 0;
@@ -23,7 +28,9 @@ const navLinks = [
     pointer-events: none;
   }
   .icon {
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -37,23 +44,35 @@ const navLinks = [
 </style>
 
 <!-- The header remains fixed at the top -->
-<header class="h-20 shadow-md flex items-center px-4 sm:px-8 justify-between bg-[#093832] fixed top-0 left-0 right-0 z-50">
+<header
+  class="h-13 shadow-md flex items-center px-4 sm:px-8 justify-between bg-[#093832] fixed top-0 left-0 right-0 z-50"
+>
   <div class="flex items-center">
     <a href="/" aria-label="Vexo Home Page">
-      <Image src={logo} alt="Vexo Logo" class="h-16 w-16"/>
+      <Image src={logo} alt="Vexo Logo" class="h-16 w-16" />
     </a>
   </div>
 
   <!-- Desktop navigation, now rendered from the navLinks array -->
   <nav class="hidden md:flex">
     <ul class="flex items-center gap-10 text-white">
-      {navLinks.map(link => (
-        <li>
-          <a href={link.href} class="text-sm font-semibold hover:text-gray-300 transition-colors">
-            {link.text}
-          </a>
-        </li>
-      ))}
+      {
+        navLinks.map((link) => {
+          const isActive = currentPath === link.href;
+          return (
+            <li>
+              <a
+                href={link.href}
+                class={`text-sm font-semibold transition-colors ${
+                  isActive ? "text-[#bf9b42]" : "hover:text-[#bf9b42]"
+                }`}
+              >
+                {link.text}
+              </a>
+            </li>
+          );
+        })
+      }
     </ul>
   </nav>
 
@@ -67,30 +86,60 @@ const navLinks = [
       aria-expanded="false"
     >
       <span class="sr-only">Open main menu</span>
-      <svg id="icon-menu" class="icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-      <svg id="icon-close" class="icon h-6 w-6 is-hidden-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      <svg
+        id="icon-menu"
+        class="icon h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path></svg
+      >
+      <svg
+        id="icon-close"
+        class="icon h-6 w-6 is-hidden-icon"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"></path></svg
+      >
     </button>
   </div>
 </header>
 
 <!-- Mobile menu panel -->
-<div id="mobile-menu" class="is-hidden md:hidden bg-[#093832]/95 backdrop-blur-sm fixed top-20 left-0 right-0 bottom-0 z-40 overflow-y-auto">
-  <nav class="mt-6">
-    <ul class="flex flex-col items-center gap-4 text-white">
-      <!-- Mobile navigation, also rendered from the navLinks array -->
-      {navLinks.map(link => (
+<div
+  id="mobile-menu"
+  class="is-hidden md:hidden bg-[#093832]/95 backdrop-blur-sm fixed top-20 left-0 right-0 bottom-0 z-40 overflow-y-auto"
+>
+  {
+    navLinks.map((link) => {
+      const isActive = currentPath === link.href;
+      return (
         <li>
-          <a href={link.href} class="block py-3 text-lg font-semibold hover:text-gray-300 transition-colors">
+          <a
+            href={link.href}
+            class={`block py-3 text-lg font-semibold transition-colors ${
+              isActive ? "text-[#bf9b42]" : "hover:text-gray-300"
+            }`}
+          >
             {link.text}
           </a>
         </li>
-      ))}
-    </ul>
-  </nav>
+      );
+    })
+  }
 </div>
 
 <!-- KEY CHANGE 2: Add a placeholder to prevent the fixed header from overlapping page content -->
-<div class="h-20"></div>
+<div class="h-13"></div>
 
 <script>
   // KEY CHANGE 3: More robust and readable script with auto-close functionality
@@ -131,7 +180,7 @@ const navLinks = [
     mobileMenu.addEventListener("click", (event) => {
       // Check if the clicked element is an anchor tag
       const target = event.target instanceof HTMLElement ? event.target : null;
-      if (target && target.tagName === 'A') {
+      if (target && target.tagName === "A") {
         closeMenu();
       }
     });

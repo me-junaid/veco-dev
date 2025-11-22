@@ -1,0 +1,309 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+// ===================================================================================
+// DATA STRUCTURE
+// ===================================================================================
+
+type Product = {
+  name: string;
+  image: ImageMetadata;
+  href: string;
+};
+
+type SubCategory = {
+  name: string;
+  products: Product[];
+};
+
+type Category = {
+  name: string;
+  slug: string;
+  subCategories: SubCategory[];
+};
+
+import canvasFrame from "../assets/images/Frames/Canvas Frame-01.jpg";
+
+// Shared product groups (DRY)
+const mostPopularProducts: Product[] = [
+  { name: "Booklets", image: canvasFrame, href: "/products/booklets" },
+  { name: "Wax Seal", image: canvasFrame, href: "/products/wax-seal" },
+  { name: "Stickers", image: canvasFrame, href: "/products/stickers" },
+];
+
+const stationeryProducts: Product[] = [
+  {
+    name: "Business Cards",
+    image: canvasFrame,
+    href: "/products/business-cards",
+  },
+  {
+    name: "Letterheads",
+    image: canvasFrame,
+    href: "/products/letterheads",
+  },
+  {
+    name: "Envelopes",
+    image: canvasFrame,
+    href: "/products/envelopes",
+  },
+];
+
+const defaultSubCategories: SubCategory[] = [
+  {
+    name: "Most Popular",
+    products: mostPopularProducts,
+  },
+  {
+    name: "Stationery & Corporate Identity",
+    products: stationeryProducts,
+  },
+];
+
+const categories: Category[] = [
+  {
+    name: "Print & Marketing",
+    slug: "print-marketing",
+    subCategories: defaultSubCategories,
+  },
+  {
+    name: "Fashion & Textile",
+    slug: "fashion-textile",
+    subCategories: defaultSubCategories,
+  },
+  {
+    name: "Office & Store Branding",
+    slug: "office-branding",
+    subCategories: defaultSubCategories,
+  },
+  {
+    name: "Signages",
+    slug: "signages",
+    subCategories: defaultSubCategories,
+  },
+  {
+    name: "Flags",
+    slug: "flags",
+    subCategories: defaultSubCategories,
+  },
+  {
+    name: "Backdrops & Exhibition",
+    slug: "backdrops-exhibition",
+    subCategories: defaultSubCategories,
+  },
+  {
+    name: "Corporate Gifts & Bags",
+    slug: "corporate-gifts",
+    subCategories: defaultSubCategories,
+  },
+];
+---
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* avoid sticky header overlap */
+  }
+
+  .category-link.is-active {
+    background-color: #e67e22;
+    color: white;
+  }
+
+  .sidebar-link.is-active {
+    background-color: #f3f4f6;
+    color: #111827;
+    font-weight: 600;
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+<div class="bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row gap-8 lg:gap-12 py-8">
+      <!-- Left Column: Sticky Sidebar (Visible on Medium screens and up) -->
+      <aside
+        class="hidden md:block md:w-1/4 lg:w-1/5 md:sticky top-28 self-start"
+        aria-label="Product categories"
+      >
+        <nav>
+          <p class="font-bold text-lg mb-4 text-gray-800">Categories</p>
+          <ul class="space-y-2">
+          
+            {
+              categories.map((category) => (
+                <li>
+                  <a
+                    href={`#${category.slug}`}
+                    data-slug={category.slug}
+                    class="sidebar-link block w-full text-left px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black transition-colors duration-200"
+                  >
+                    {category.name}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="w-full md:w-3/4 lg:w-4/5">
+        <!-- Sentinel for "Home" (scroll spy target) -->
+        <section
+          id="top"
+          class="h-px scroll-mt-24"
+          aria-hidden="true"
+          data-scroll-section
+        ></section>
+
+        <!-- Horizontal Scrolling Tabs (Visible on Mobile only) -->
+        <div
+          class="md:hidden sticky top-20 bg-white/95 backdrop-blur-sm py-3 -mx-4 px-4 border-b z-30"
+        >
+          <div class="flex space-x-3 overflow-x-auto no-scrollbar">
+            {
+              categories.map((category, index) => (
+                <a
+                  href={`#${category.slug}`}
+                  data-slug-tab={category.slug}
+                  class:list={[
+                    "category-link flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full transition-colors",
+                    {
+                      "is-active": index === 0,
+                      "bg-gray-100 text-gray-800": index !== 0,
+                    },
+                  ]}
+                >
+                  {category.name}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="space-y-12 pt-8">
+          {
+            categories.map((category) => (
+              <section
+                id={category.slug}
+                class="scroll-mt-24"
+                data-scroll-section
+              >
+                <div class="flex justify-between items-center">
+                  <h2 class="text-2xl font-bold text-gray-900">
+                    {category.name}
+                  </h2>
+                  {/* 
+                  <a
+                    href="#"
+                    class="text-sm font-semibold text-[#E67E22] hover:underline"
+                  >
+                    View all ▶
+                  </a> 
+                  */}
+                </div>
+
+                <div class="mt-6 space-y-10">
+                  {category.subCategories.map((subCat) => (
+                    <div>
+                      <h3 class="text-xl font-semibold text-gray-700">
+                        {subCat.name}
+                      </h3>
+                      <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-4">
+                        {subCat.products.map((product) => (
+                          <a
+                            href={product.href}
+                            class="group block text-center"
+                          >
+                            <div class="aspect-square w-full bg-gray-50 rounded-lg overflow-hidden border border-gray-200 group-hover:border-[#E67E22] group-hover:shadow-lg transition-all duration-300">
+                              <Image
+                                src={product.image}
+                                alt={product.name}
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              />
+                            </div>
+                            <p class="mt-3 font-medium text-gray-800">
+                              {product.name}
+                            </p>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))
+          }
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<script lang="ts">
+  function initializeScrollSpy() {
+    if (typeof window === "undefined" || typeof IntersectionObserver === "undefined") return;
+
+    const sections = document.querySelectorAll("[data-scroll-section]");
+    const sidebarLinks = document.querySelectorAll(".sidebar-link");
+    const tabLinks = document.querySelectorAll(".category-link");
+
+    if (!sections.length) return;
+
+    const setActive = (slug) => {
+      // Sidebar links (desktop)
+      sidebarLinks.forEach((link) => {
+        const linkSlug = link.getAttribute("data-slug");
+        link.classList.toggle("is-active", linkSlug === slug);
+      });
+
+      // Tab links (mobile)
+      tabLinks.forEach((link) => {
+        const linkSlug = link.getAttribute("data-slug-tab");
+        const isActive = linkSlug === slug;
+        link.classList.toggle("is-active", isActive);
+        link.classList.toggle("bg-gray-100", !isActive);
+        link.classList.toggle("text-gray-800", !isActive);
+
+        if (isActive) {
+          link.scrollIntoView({
+            behavior: "smooth",
+            inline: "center",
+            block: "nearest",
+          });
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const slug = entry.target.id;
+            if (!slug) return;
+            setActive(slug);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-90px 0px -55% 0px", // tune based on header height
+        threshold: 0.2,
+      },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  }
+
+  document.addEventListener("DOMContentLoaded", initializeScrollSpy);
+</script>

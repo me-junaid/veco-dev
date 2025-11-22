@@ -4,7 +4,7 @@ import HangningFlag from "../assets/images/Backdrop and Exhibition/Hangning flag
 import Blanket from "../assets/images/Fashion and Textiles/Blanket.png";
 import Frames from "../assets/images/Frames/Acrylic Frame-01.jpg";
 import Scarf from "../assets/images/Fashion and Textiles/Scarf_1.png";
-import Rollup from "../assets/images/Backdrop and Exhibition/Rollup.png";
+import Rollup from "../assets/images/will-update-soon.jpg";
 import Lable from "../assets/images/Fashion and Textiles/Woven Lable-01.png";
 
 

@@ -10,8 +10,6 @@ export interface Props {
   productDescription: string;
   features: string[];
   whatsAppNumber: string;
-  price: number;
-  currency?: string; // Optional currency symbol
 }
 
 const {
@@ -21,8 +19,6 @@ const {
   productDescription,
   features,
   whatsAppNumber,
-  price,
-  currency = "AED", // Default currency
 } = Astro.props;
 
 // The first image in the array will be the default main image
@@ -89,12 +85,6 @@ const mainImage = productImages[0];
       </h1>
       <p class="mt-2 text-lg text-gray-600">{productTagline}</p>
 
-      <!-- Price Section -->
-      <div class="mt-5">
-        <span class="text-3xl font-bold text-gray-900">{currency} {price.toFixed(2)}</span>
-        <span class="text-sm text-gray-500 ml-2">per item</span>
-      </div>
-
       <hr class="my-6 border-gray-200" />
 
       <div>
@@ -139,7 +129,7 @@ const mainImage = productImages[0];
   </div>
 </div>
 
-<script define:vars={{ productName, whatsAppNumber, price, currency }}>
+<script define:vars={{ productName, whatsAppNumber }}>
   function initializeProductPage() {
     // --- Image Gallery Logic ---
     const mainImage = document.getElementById("main-product-image");
@@ -172,7 +162,7 @@ const mainImage = productImages[0];
       quantityInputs.forEach(input => (input.value = currentQuantity));
       
       const totalPrice = (currentQuantity * price).toFixed(2);
-      const message = `Hello, I'd like to order ${currentQuantity} of the "${productName}". The total price is ${currency} ${totalPrice}.`;
+      const message = `Hello, I'd like to order ${currentQuantity} of the "${productName}".`;
       const encodedMessage = encodeURIComponent(message);
       const url = `https://wa.me/${whatsAppNumber}?text=${encodedMessage}`;
       

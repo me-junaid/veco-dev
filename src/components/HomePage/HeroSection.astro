@@ -6,6 +6,10 @@ import credit from "../../assets/images/credit-card.gif";
 import { categoryData } from "../../data/Items.js";
 import ScrollItems from "./ScrollItems.astro";
 
+import banner1 from "../../assets/images/banner1.jpeg";
+import banner2 from "../../assets/images/banner2.jpeg";
+import banner3 from "../../assets/images/banner3.jpeg";
+
 const features = [
   { text: "On-Time Delivery", image: truck, alt: "Animated delivery truck" },
   { text: "90 Days Credit", image: credit, alt: "Animated credit card" },
@@ -13,39 +17,106 @@ const features = [
 ---
 
 <style>
-  /* KEY CHANGE 1: Define the start and end states for the item animation. */
-  /* This is a "from" state: invisible and slightly moved down. */
+  /* Card Animations */
   .item-card {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(20px) scale(0.95);
     transition:
-      opacity 0.4s ease-out,
-      transform 0.4s ease-out;
+      opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  /* This is the "to" state: fully visible and in its final position. */
+
   .item-card.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+  }
+
+  /* Carousel Styles */
+  #carousel-track {
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Active Dot Style */
+  .carousel-dot.active {
+    background: white;
+    width: 2rem; /* w-8 */
+    opacity: 1;
+  }
+
+  /* Feature Animations */
+  .feature-badge {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .feature-badge:nth-child(2) {
+    animation-delay: 1.5s;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Decoration Animations */
+  .gift-decoration {
+    animation: rotate-gift 4s ease-in-out infinite;
+  }
+
+  @keyframes rotate-gift {
+    0%,
+    100% {
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(10deg) scale(1.1);
+    }
+  }
+
+  /* Shimmer Effect */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    100% {
+      left: 100%;
+    }
   }
 </style>
 
-<section class="py-16 sm:py-20 relative overflow-x-clip">
-  <Image
-    src={gift}
-    alt=""
-    aria-hidden="true"
-    role="presentation"
-    class="hidden md:block absolute top-8 left-4 lg:left-10 h-16 w-16 -z-10"
-  />
-
+<section
+  class="relative overflow-x-clip bg-gradient-to-b from-gray-50 to-white"
+>
+  <!-- 
+    TOP SECTION (Commented out in original, kept here for reference)
+  -->
+  <!-- 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div
-      class="flex flex-col lg:flex-row gap-8 lg:gap-12 justify-between items-center text-center lg:text-left"
-    >
+    <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 justify-between items-center text-center lg:text-left">
       <div>
-        <h2
-          class="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-pink-500 via-orange-500 to-[#bf9b42] bg-clip-text text-transparent"
-        >
+        <h2 class="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-pink-500 via-orange-500 to-[#bf9b42] bg-clip-text text-transparent">
           Premium Gifts in Dubai
         </h2>
         <p class="mt-3 text-gray-600 max-w-lg mx-auto lg:mx-0">
@@ -53,56 +124,152 @@ const features = [
         </p>
       </div>
       <div class="flex flex-row sm:flex-col gap-4">
-        {
-          features.map((feature) => (
-            <div class="flex items-center  rounded-full pr-3 py-1">
+        {features.map((feature) => (
+            <div class="flex items-center rounded-full pr-3 py-1">
               <p class="bg-[#bf9b42] px-4 py-2 rounded-full font-semibold w-36 text-center text-sm text-black">
                 {feature.text}
               </p>
-              <Image
-                src={feature.image}
-                alt={feature.alt}
-                class="h-12 w-12 ml-2"
-              />
+              <Image src={feature.image} alt={feature.alt} class="h-12 w-12 ml-2" />
             </div>
-          ))
-        }
+        ))}
       </div>
     </div>
-  </div>
+  </div> 
+  -->
 
-  <div id="product-category-section" class="pt-12 sm:pt-16">
+  <!-- 
+    CAROUSEL SECTION (FIXED)
+    1. Added id="carousel-container"
+    2. Added navigation buttons
+    3. Added dot indicators
+  -->
+  <section
+    id="carousel-container"
+    class="relative overflow-hidden w-full mx-auto group"
+  >
+    <!-- Slides Track -->
+    <div id="carousel-track" class="flex h-full w-full">
+      <div class="min-w-full h-full relative">
+        <Image
+          src={banner1}
+          alt="Banner 1"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <div class="min-w-full h-full relative">
+        <Image
+          src={banner2}
+          alt="Banner 2"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <div class="min-w-full h-full relative">
+        <Image
+          src={banner3}
+          alt="Banner 3"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+
+    <!-- Previous Button -->
+    <button
+      id="carousel-prev"
+      class="absolute hidden left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
+      aria-label="Previous slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2.5"
+        stroke="currentColor"
+        class="w-5 h-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15.75 19.5L8.25 12l7.5-7.5"></path>
+      </svg>
+    </button>
+
+    <!-- Next Button -->
+    <button
+      id="carousel-next"
+      class="absolute hidden right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
+      aria-label="Next slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2.5"
+        stroke="currentColor"
+        class="w-5 h-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
+      </svg>
+    </button>
+
+    <!-- Dots Navigation -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <button
+        class="carousel-dot w-8 h-2 rounded-full bg-white transition-all duration-300 active"
+        data-index="0"
+        aria-label="Slide 1"></button>
+      <button
+        class="carousel-dot w-2 h-2 rounded-full bg-white/60 hover:bg-white/80 transition-all duration-300"
+        data-index="1"
+        aria-label="Slide 2"></button>
+      <button
+        class="carousel-dot w-2 h-2 rounded-full bg-white/60 hover:bg-white/80 transition-all duration-300"
+        data-index="2"
+        aria-label="Slide 3"></button>
+    </div>
+  </section>
+
+  <!-- Product Categories -->
+  <div id="product-category-section" class="">
     <ScrollItems />
-    <div class="mt-8 relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative px-8 mx-auto">
       {
         categoryData.map((category, index) => (
           <div
             data-panel-id={category.id}
-            class:list={["items-panel", { hidden: index > 0 }]}
+            class:list={[
+              "items-panel transition-opacity duration-500",
+              { hidden: index > 0 },
+            ]}
           >
-            <h3 class="text-2xl font-bold mb-6 text-gray-800">
-              Top Picks in <span class="text-orange-500">{category.title}</span>
-            </h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
-              {category.items.map((item) => (
-                // KEY CHANGE 2: Add the `item-card` class for our animation hook.
+            <div class="flex items-center gap-3 mb-8">
+              <h3 class="text-3xl sm:text-4xl font-bold text-gray-900">
+                {category.title}
+              </h3>
+              <div class="h-1 flex-grow bg-gradient-to-r from-[#bf9b42] to-transparent rounded-full" />
+            </div>
+            <div class="flex justify-between flex-wrap gap-4 sm:gap-6">
+              {category.items.map((item, index) => (
                 <a
                   href={item.href}
                   class:list={[
-                    "item-card group block text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#bf9b42] rounded-2xl",
-                    // Make the first panel's items visible on initial load.
+                    "item-card w-45 group block text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#bf9b42] rounded-2xl",
                     { "is-visible": index === 0 },
+                    // 👉 Add margin-left auto for last item
+                    { "mr-auto": index === category.items.length - 1 },
                   ]}
                 >
-                  <div class="bg-white rounded-2xl h-full p-2 border-2 border-gray-100 group-hover:border-[#bf9b42] group-hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-start group-hover:-translate-y-1">
-                    <div class="aspect-square w-full rounded-md overflow-hidden flex items-center justify-center bg-gray-50">
+                  <div class="shimmer bg-white rounded-2xl h-full p-3 border-2 border-gray-100 group-hover:border-[#bf9b42] group-hover:shadow-2xl transition-all duration-300 flex flex-col items-center justify-start group-hover:-translate-y-2">
+                    <div class="aspect-square w-full rounded-xl overflow-hidden flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-orange-50 group-hover:to-pink-50 transition-all duration-300">
                       <Image
                         src={item.image}
                         alt={item.name}
-                        class="object-contain max-h-full max-w-full group-hover:scale-105 transition-transform duration-300"
+                        class="object-contain max-h-full max-w-full group-hover:scale-110 transition-transform duration-500"
                       />
                     </div>
-                    <h4 class="mt-3 text-sm font-semibold text-gray-900 leading-tight">
+                    <h4 class="mt-4 text-sm font-bold text-gray-900 leading-tight group-hover:text-[#bf9b42] transition-colors duration-300">
                       {item.name}
                     </h4>
                   </div>
@@ -117,27 +284,33 @@ const features = [
 </section>
 
 <script>
+  // ----------------------------
+  // Product Category Switcher
+  // ----------------------------
   function initializeProductCategorySwitcher(sectionId: string): void {
     const section = document.getElementById(sectionId);
     if (!section) return;
 
+    // Note: .category-card elements are likely inside <ScrollItems />
     const categoryCards =
       section.querySelectorAll<HTMLDivElement>(".category-card");
     const itemPanels = section.querySelectorAll<HTMLDivElement>(".items-panel");
-    const staggerDelay = 50; // milliseconds
+    const staggerDelay = 40;
 
     const animatePanelItems = (panel: HTMLElement): void => {
       const items = panel.querySelectorAll<HTMLDivElement>(".item-card");
       items.forEach((item, index) => {
-        item.style.transitionDelay = `${index * staggerDelay}ms`;
-        item.classList.add("is-visible");
+        setTimeout(() => {
+          item.style.transitionDelay = `${index * staggerDelay}ms`;
+          item.classList.add("is-visible");
+        }, 50);
       });
     };
 
     const resetPanelItems = (panel: HTMLElement): void => {
       const items = panel.querySelectorAll<HTMLDivElement>(".item-card");
       items.forEach((item) => {
-        item.style.transitionDelay = "";
+        item.style.transitionDelay = "0ms";
         item.classList.remove("is-visible");
       });
     };
@@ -152,29 +325,160 @@ const features = [
 
         itemPanels.forEach((panel) => {
           const isTargetPanel = panel.dataset.panelId === categoryId;
+
+          if (!isTargetPanel) {
+            resetPanelItems(panel);
+          }
+
           panel.classList.toggle("hidden", !isTargetPanel);
 
           if (isTargetPanel) {
-            animatePanelItems(panel);
-          } else {
-            resetPanelItems(panel);
+            setTimeout(() => animatePanelItems(panel), 50);
           }
         });
       });
     });
 
-    // Animate the first visible panel on page load
+    // Animate the first visible panel on load
     const initialPanel = section.querySelector<HTMLElement>(
       ".items-panel:not(.hidden)",
     );
     if (initialPanel) {
-      setTimeout(() => {
-        animatePanelItems(initialPanel);
-      }, 100);
+      setTimeout(() => animatePanelItems(initialPanel), 150);
     }
   }
 
+  // ----------------------------
+  // Carousel Functionality
+  // ----------------------------
+  function initializeCarousel(): void {
+    const track = document.getElementById("carousel-track");
+    const container = document.getElementById("carousel-container");
+    const prevBtn = document.getElementById("carousel-prev");
+    const nextBtn = document.getElementById("carousel-next");
+    const dots = document.querySelectorAll(".carousel-dot");
+
+    // Guard clause: If elements aren't found, stop (prevents errors)
+    if (!track || !container || !prevBtn || !nextBtn) {
+      console.warn("Carousel elements not found. Check HTML IDs.");
+      return;
+    }
+
+    const slides = track.children;
+    let index = 0;
+    let autoSlideInterval: number;
+    let isPaused = false;
+
+    function updateCarousel(): void {
+      // Move track
+      (track as HTMLElement).style.transform = `translateX(-${index * 100}%)`;
+
+      // Update dots
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.add("active");
+          dot.classList.remove("bg-white/60", "w-2");
+        } else {
+          dot.classList.remove("active");
+          dot.classList.add("bg-white/60", "w-2");
+        }
+      });
+    }
+
+    function nextSlide(): void {
+      index = (index + 1) % slides.length;
+      updateCarousel();
+    }
+
+    function prevSlide(): void {
+      index = (index - 1 + slides.length) % slides.length;
+      updateCarousel();
+    }
+
+    function goToSlide(slideIndex: number): void {
+      index = slideIndex;
+      updateCarousel();
+    }
+
+    function startAutoSlide(): void {
+      clearInterval(autoSlideInterval);
+      if (!isPaused) {
+        autoSlideInterval = window.setInterval(nextSlide, 4000);
+      }
+    }
+
+    function stopAutoSlide(): void {
+      clearInterval(autoSlideInterval);
+    }
+
+    // Event listeners
+    prevBtn.addEventListener("click", () => {
+      prevSlide();
+      stopAutoSlide();
+      startAutoSlide();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      nextSlide();
+      stopAutoSlide();
+      startAutoSlide();
+    });
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+        const slideIndex = parseInt(target.dataset.index || "0");
+        goToSlide(slideIndex);
+        stopAutoSlide();
+        startAutoSlide();
+      });
+    });
+
+    // Pause on hover
+    container.addEventListener("mouseenter", () => {
+      isPaused = true;
+      stopAutoSlide();
+    });
+
+    container.addEventListener("mouseleave", () => {
+      isPaused = false;
+      startAutoSlide();
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    container.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        stopAutoSlide();
+      },
+      { passive: true },
+    );
+
+    container.addEventListener(
+      "touchend",
+      (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) {
+          nextSlide();
+        } else if (touchEndX - touchStartX > 50) {
+          prevSlide();
+        }
+        startAutoSlide();
+      },
+      { passive: true },
+    );
+
+    // Start auto-rotation
+    startAutoSlide();
+  }
+
+  // Initialize everything when the DOM is ready
   document.addEventListener("DOMContentLoaded", () => {
     initializeProductCategorySwitcher("product-category-section");
+    initializeCarousel();
   });
 </script>

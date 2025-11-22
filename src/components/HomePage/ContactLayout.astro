@@ -1,16 +1,29 @@
 ---
+const categoryData = [
+  "Print & Marketing",
+  "Office & Store Branding",
+  "Signages",
+  "Backdrops & Exhibition",
+  "Coporate Gifts",
+];
 // No props are needed for this component, but the frontmatter is kept for Astro's structure.
 ---
 
-<section class="bg-black py-3 px-4 sm:px-8 text-xs">
-  <div class="container mx-auto flex flex-col sm:flex-row  justify-center sm:justify-between gap-y-2 sm:gap-y-0">
-    <div class="text-white text-left ">
-      <span class="p-1 border border-[#bf9b42] rounded-full px-2">
-        20% off for your first order.
+<section class="">
+  <div
+    class="container mx-auto flex flex-col sm:flex-row justify-center sm:justify-between  sm:gap-y-0 bg-white py-2 px-4 sm:px-8 text-xs"
+  >
+    <div class=" text-left">
+      <span class="p-1 border border-[#bf9b42] rounded-full px-2 mr-1">
+        Free Shipping
       </span>
+      + No Minimum 🚚 Same-Day Delivery
     </div>
     <div class="text-[#bf9b42] font-bold flex items-center gap-x-3 ml-auto">
-      <a href="tel:+919876543210" class="hover:text-white transition-colors duration-300">
+      <a
+        href="tel:+919876543210"
+        class="hover:text-black transition-colors duration-300"
+      >
         +91 9876543210
       </a>
       <span class="text-gray-600">|</span>
@@ -19,4 +32,24 @@
       </a>
     </div>
   </div>
+
+  <!-- <div class="flex border-b-2 border-gray-50">
+    <div class="w-[300px] flex items-center px-4 py-1 gap-3 bg-gray-50">
+      <div class="text-lg">❤️</div>
+      <div class="">
+        <p class="font-bold">We Never Say No</p>
+        <p>Real Humans. 24/7 Support.</p>
+      </div>
+    </div>
+
+    <ul class="flex-grow justify-between px-4 items-center hidden md:flex">
+      {
+        categoryData.map((item) => (
+          <li class="cursor-pointer text-gray-700 hover:text-black transition">
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+  </div> -->
 </section>
