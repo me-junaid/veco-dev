@@ -1,95 +1,130 @@
 ---
-import "bootstrap-icons/font/bootstrap-icons.css";
-// It's recommended to use Astro's built-in image and video optimization features.
-// Consider moving your video assets to the `src` directory to leverage this.
-// For this example, we'll keep the paths as is, but see the notes below.
-import testimonialsVideo from "../../assets/videos/From KlickPin CF Best green screen airplane template video _ Greenscreen ideas Greenscreen Green screen photography.mp4";
-import blackScreen from "../../assets/videos/videoplayback.mp4";
+
+import { Image } from "astro:assets";
+import client1 from "../../assets/images/vexoclients/Our Client Logo-01.jpg"
+import client2 from "../../assets/images/vexoclients/Our Client Logo-02.jpg"
+import client3 from "../../assets/images/vexoclients/Our Client Logo-03.jpg"
+import client4 from "../../assets/images/vexoclients/Our Client Logo-04.jpg"
+import client5 from "../../assets/images/vexoclients/Our Client Logo-05.jpg"
+import client6 from "../../assets/images/vexoclients/Our Client Logo-06.jpg"
+const item2 = [client3, client1, client2, client4, client5, client6];
+const items = [
+  "First Images",
+  "Second Images",
+  "Third Images",
+  "Forth Images",
+  "Fifth Images",
+  "Sixth Images",
+  "Seventh Images",
+  "Eighth Images",
+  "Ninth Images",
+  "Tenth Images",
+  "First Images",
+  "Second Images",
+  "Third Images",
+  "Forth Images",
+  "Fifth Images",
+  "Sixth Images",
+  "Seventh Images",
+  "Eighth Images",
+  "Ninth Images",
+  "Tenth Images",
+];
 ---
 
-<section class="py-10 px-4 sm:px-6 lg:px-8">
-  <h2 class="text-2xl md:text-3xl font-bold text-center">
-    Trusted by 35k+ Businesses — Preferred by SMEs, Corporates, Agencies &
-    Resellers
-  </h2>
+<section class="bg-[#c79940] mt-8">
+  <div class="justify-center items-center flex p-3 flex-col mt-5">
+    <h2
+      class="text-center text-white bg-[#093830] px-9 py-1 rounded-full font-semibold text-2xl"
+    >
+      Oru Works
+    </h2>
+    <h3 class="text-3xl md:text-4xl font-bold text-center">
+      Portfolio Showcase
+    </h3>
+    <p class="text-sm font-medium mt-1 text-center text-gray-800">
+      Explore our latest projects and see the quality we deliver.
+    </p>
+  </div>
 
-  <div class="relative w-full max-w-7xl mx-auto mt-10 overflow-hidden rounded-2xl border border-[#a3a3a3]">
-    <!-- Video Background -->
-    <div class="absolute inset-0 -z-10">
-      <video
-        class="w-full h-full object-cover"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-      >
-        <source src={blackScreen} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+  <div class="flex gap-3 p-3 overflow-x-scroll no-scrollbar">
+    {
+      items.map((item) => (
+        <div class="h-[300px] bg-[#093830] w-[300px] shrink-0 flex items-center justify-center text-white">
+          {item}
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="flex gap-5 p-10 bg-white flex-wrap">
+    <div class="bg-[#093830] p-8 grow text-[#c79940] rounded-2xl">
+      <h2 class="text-center font-semibold text-4xl">Available</h2>
+      <h4 class="text-center font-semibold">Same day delivery</h4>
     </div>
-
-    <div class="p-6 md:p-10 text-white">
-      <h3 class="font-bold text-xl md:text-2xl">
-        Ready for a quote? Let's get started together.
-      </h3>
-      <div class="mt-5 flex flex-col sm:flex-row gap-4">
-        <button
-          class="px-7 py-3 bg-amber-300 rounded-xl text-lg font-bold text-black hover:bg-amber-400 transition-colors"
-        >
-          Get Quote on Whatsapp
-        </button>
-        <a
-          href="tel:+919876543210"
-          class="px-7 py-3 bg-amber-300 rounded-xl text-lg font-bold text-black text-center hover:bg-amber-400 transition-colors"
-        >
-          +91 9876543210
-        </a>
-      </div>
+    <div class="bg-[#093830] p-8 grow text-[#c79940] rounded-2xl">
+      <h2 class="text-center font-semibold text-4xl">95.0%</h2>
+      <h4 class="text-center font-semibold">Color Accuracy</h4>
+    </div>
+    <div class="bg-[#093830] p-8 grow text-[#c79940] rounded-2xl">
+      <h2 class="text-center font-semibold text-4xl">100%</h2>
+      <h4 class="text-center font-semibold">Eco-Friendly</h4>
+    </div>
+    <div class="bg-[#093830] p-8 grow text-[#c79940] rounded-2xl">
+      <h2 class="text-center font-semibold text-4xl">Over 300 AED</h2>
+      <h4 class="text-center font-semibold">Free Delivery</h4>
     </div>
   </div>
 
-  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
-    <div
-      class="p-6 md:p-10 bg-black border border-[#a3a3a3] rounded-2xl text-white"
+  <div class="justify-center items-center flex p-3 pb-0 flex-col mt-4">
+    <h2
+      class="text-center text-white bg-[#093830] px-9 py-1 rounded-full font-semibold text-2xl"
     >
-      <p class="text-xl md:text-2xl font-semibold text-center">
-        Get Your Custom Print Quote in a minute
-      </p>
-      <div class="mt-6">
-        <label
-          for="imageUpload"
-          class="cursor-pointer text-center font-semibold text-lg flex flex-col items-center justify-center bg-[#c3c3c3] text-black px-6 py-10 rounded-2xl transition duration-200 shadow-md hover:bg-[#b3b3b3]"
-        >
-          <i class="bi bi-upload text-5xl font-bold"></i>
-          <p class="mt-4 font-bold">Upload your Artwork</p>
-        </label>
-        <input type="file" id="imageUpload" accept="image/*" class="hidden" />
-        <img
-          id="previewImage"
-          class="hidden max-w-xs rounded-xl shadow-lg border border-gray-300 mt-4 mx-auto"
-          alt="Uploaded preview"
-        />
-      </div>
-    </div>
-
-    <div
-      class="relative p-6 md:p-10 border border-[#a3a3a3] rounded-2xl flex justify-center items-center overflow-hidden bg-black min-h-[300px]"
-    >
-      <video
-        class="absolute inset-0 w-full h-full object-cover z-0 opacity-75"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-      >
-        <source src={testimonialsVideo} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <p class="z-10 text-3xl md:text-4xl text-white font-bold text-center">
-        Magic is gonna happen here!!
-      </p>
-    </div>
+      Brands We Serve
+    </h2>
   </div>
+
+  <div class="scroll-wrapper p-7">
+  <div class="scroll-track gap-3">
+    {
+      item2.map((item) => (
+        <div class="bg-[#093830] w-[300px] md:w-[370px] shrink-0 rounded-xl flex items-center justify-center">
+          <Image
+            src={item}
+            alt="Client logo"
+          />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
 </section>
+
+
+<style>
+  .scroll-wrapper {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .scroll-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 25s linear infinite;
+  }
+
+  @keyframes scroll-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Pause on hover (optional) */
+  .scroll-wrapper:hover .scroll-track {
+    animation-play-state: paused;
+  }
+</style>

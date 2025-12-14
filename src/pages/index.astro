@@ -12,6 +12,7 @@ import FlawlessPrinting from "../components/HomePage/FlawlessPrinting.astro";
 import Products from "../components/Products.astro";
 import PrintingProcess from "../components/HomePage/PrintingProcess.astro";
 import Banners from "../components/HomePage/Banners.astro";
+import Contact from "../components/HomePage/Contact.astro";
 ---
 
 <html lang="en">
@@ -20,16 +21,17 @@ import Banners from "../components/HomePage/Banners.astro";
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Vexo | Your Gift Partner</title>
-		<link rel="icon" type="image/png" href="/src/assets/images/vexologo.png" />
+		<link rel="icon" type="image/png" href="/vexologo.png" />
 	</head>
 	<body>
 		<Header />
-		<ContactLayout />
+		<!-- <ContactLayout /> -->
 		<Banners/>
 		<HeroSection />
-		<!-- <Testimonials /> -->
+		<Testimonials />
 		<PrintingProcess />
 		<WhyUs />
+		<Contact/>
 		<!-- <UploadImage /> -->
 		<!-- <PrintingSolutions /> -->
 		<!-- <FlawlessPrinting /> -->

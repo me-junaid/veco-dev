@@ -104,6 +104,14 @@ const features = [
       left: 100%;
     }
   }
+
+  .category-label {
+    background: linear-gradient(135deg, #ec4899, #f97316, #bf9b42);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
 </style>
 
 <section
@@ -144,97 +152,112 @@ const features = [
     3. Added dot indicators
   -->
   <section
-    id="carousel-container"
-    class="relative overflow-hidden w-full mx-auto group"
+    class="bg-[#ece0c6] p-12 py-6 font-sans text-[#093830]"
   >
-    <!-- Slides Track -->
-    <div id="carousel-track" class="flex h-full w-full">
-      <div class="min-w-full h-full relative">
-        <Image
-          src={banner1}
-          alt="Banner 1"
-          class="w-full h-full object-cover"
-        />
+    <div class=" mx-auto">
+      <!-- Badge -->
+      <div class="mb-6">
+        <span
+          class="inline-block px-5 py-2 rounded-full text-white
+           bg-[#093830]
+           shadow-[inset_0_0_8px_rgba(255,255,255,0.25),0_4px_10px_rgba(0,0,0,0.15)]
+           text-xs md:text-sm font-semibold tracking-wider uppercase"
+        >
+          Premium Printing Solution
+        </span>
       </div>
-      <div class="min-w-full h-full relative">
-        <Image
-          src={banner2}
-          alt="Banner 2"
-          class="w-full h-full object-cover"
-        />
-      </div>
-      <div class="min-w-full h-full relative">
-        <Image
-          src={banner3}
-          alt="Banner 3"
-          class="w-full h-full object-cover"
-        />
-      </div>
-    </div>
 
-    <!-- Previous Button -->
-    <button
-      id="carousel-prev"
-      class="absolute hidden left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
-      aria-label="Previous slide"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2.5"
-        stroke="currentColor"
-        class="w-5 h-5"
+      <!-- Main Headline -->
+      <h1
+        class="text-4xl md:text-5xl font-bold leading-tight tracking-tight mb-3"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M15.75 19.5L8.25 12l7.5-7.5"></path>
-      </svg>
-    </button>
+        Transform Your <br class="hidden md:block" />
+        Ideas Into Print
+      </h1>
 
-    <!-- Next Button -->
-    <button
-      id="carousel-next"
-      class="absolute hidden right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 cursor-pointer"
-      aria-label="Next slide"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2.5"
-        stroke="currentColor"
-        class="w-5 h-5"
+      <!-- Description -->
+      <p
+        class="text-[#093830]/80 font-medium text-base md:text-lg leading-relaxed mb-3 w-full md:w-2/3 lg:w-1/2 max-w-xl"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
-      </svg>
-    </button>
+        Professional printing services tailored for businesses of all sizes.
+        From sophisticated business cards to large-format banners, we deliver
+        exceptional quality with every press.
+      </p>
 
-    <!-- Dots Navigation -->
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-      <button
-        class="carousel-dot w-8 h-2 rounded-full bg-white transition-all duration-300 active"
-        data-index="0"
-        aria-label="Slide 1"></button>
-      <button
-        class="carousel-dot w-2 h-2 rounded-full bg-white/60 hover:bg-white/80 transition-all duration-300"
-        data-index="1"
-        aria-label="Slide 2"></button>
-      <button
-        class="carousel-dot w-2 h-2 rounded-full bg-white/60 hover:bg-white/80 transition-all duration-300"
-        data-index="2"
-        aria-label="Slide 3"></button>
+      <!-- Buttons (Action Area) -->
+      <div class="flex flex-col sm:flex-row gap-4 mb-4">
+        <button
+          class="px-8 py-3.5 rounded-lg text-white
+           bg-[#093830] hover:bg-[#0c4a40] hover:shadow-lg hover:-translate-y-0.5
+           text-sm font-semibold tracking-wide transition-all duration-300"
+        >
+          GET STARTED
+        </button>
+        <button
+          class="px-8 py-3.5 rounded-lg text-[#093830]
+           border-2 border-[#093830] hover:bg-[#093830] hover:text-white
+           text-sm font-bold tracking-wide transition-all duration-300"
+        >
+          VIEW PORTFOLIO
+        </button>
+      </div>
+
+      <!-- Stats Section -->
+      <div
+        class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-0 sm:divide-x divide-[#093830]/20 pt-4 border-t border-[#093830]/10"
+      >
+        <!-- Stat 1 -->
+        <div class="sm:pr-8">
+          <h2 class="text-4xl md:text-5xl font-bold">10K+</h2>
+          <p
+            class="font-medium text-sm md:text-base mt-1 opacity-80 uppercase tracking-wide"
+          >
+            Projects Completed
+          </p>
+        </div>
+
+        <!-- Stat 2 -->
+        <div class="sm:px-8">
+          <h2 class="text-4xl md:text-5xl font-bold">500+</h2>
+          <p
+            class="font-medium text-sm md:text-base mt-1 opacity-80 uppercase tracking-wide"
+          >
+            Happy Clients
+          </p>
+        </div>
+
+        <!-- Stat 3 -->
+        <div class="sm:pl-8">
+          <h2 class="text-4xl md:text-5xl font-bold">15+</h2>
+          <p
+            class="font-medium text-sm md:text-base mt-1 opacity-80 uppercase tracking-wide"
+          >
+            Years Experience
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
+
+  <div class="justify-center items-center flex p-3 flex-col">
+    <h2
+      class="text-center text-white bg-[#093830] px-9 py-1 rounded-full font-semibold text-2xl mt-4"
+    >
+      Oru Products
+    </h2>
+    <h3 class="text-[#c79940] text-2xl md:text-4xl font-bold text-center">
+      Premium Printing Solutions
+    </h3>
+    <p class="text-[#c79940] text-sm mt-1 text-center">
+      We offer a comprehensive range of printing solutions to meet all your
+      business needs.
+    </p>
+  </div>
   <!-- Product Categories -->
   <div id="product-category-section" class="">
     <ScrollItems />
-    <div class="relative px-8 mx-auto">
+    <!-- <div class="relative px-8 mx-auto">
       {
         categoryData.map((category, index) => (
           <div
@@ -245,24 +268,24 @@ const features = [
             ]}
           >
             <div class="flex items-center gap-3 mb-8">
-              <h3 class="text-3xl sm:text-4xl font-bold text-gray-900">
+              <h3 class="text-3xl sm:text-4xl font-bold text-gray-900 category-label">
                 {category.title}
               </h3>
               <div class="h-1 flex-grow bg-gradient-to-r from-[#bf9b42] to-transparent rounded-full" />
             </div>
-            <div class="flex justify-between flex-wrap gap-4 sm:gap-6">
+            <div class=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-7 justify-between  gap-4 sm:gap-6">
               {category.items.map((item, index) => (
                 <a
                   href={item.href}
                   class:list={[
-                    "item-card w-45 group block text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#bf9b42] rounded-2xl",
+                    "item-card md:w-45  group block text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#bf9b42]",
                     { "is-visible": index === 0 },
                     // 👉 Add margin-left auto for last item
                     { "mr-auto": index === category.items.length - 1 },
                   ]}
                 >
-                  <div class="shimmer bg-white rounded-2xl h-full p-3 border-2 border-gray-100 group-hover:border-[#bf9b42] group-hover:shadow-2xl transition-all duration-300 flex flex-col items-center justify-start group-hover:-translate-y-2">
-                    <div class="aspect-square w-full rounded-xl overflow-hidden flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-orange-50 group-hover:to-pink-50 transition-all duration-300">
+                  <div class="shimmer bg-white h-full p-3 border-2 border-gray-100 group-hover:border-[#bf9b42] group-hover:shadow-2xl transition-all duration-300 flex flex-col items-center justify-start group-hover:-translate-y-2">
+                    <div class="aspect-square w-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-orange-50 group-hover:to-pink-50 transition-all duration-300">
                       <Image
                         src={item.image}
                         alt={item.name}
@@ -279,7 +302,7 @@ const features = [
           </div>
         ))
       }
-    </div>
+    </div> -->
   </div>
 </section>
 

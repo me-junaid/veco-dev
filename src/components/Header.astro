@@ -1,13 +1,14 @@
 ---
 import { Image } from "astro:assets";
-import logo from "../assets/images/vexologo.png";
+import logo from "../assets/images/logo.png";
 
 // KEY CHANGE 1: Define navigation links in one place (DRY principle).
 const navLinks = [
+  { href: "/", text: "Home" },
+  { href: "/service", text: "Service" },
   { href: "/products", text: "Products" },
-  { href: "/why-us", text: "Why Us?" },
-  { href: "/why-us", text: "Help is here" },
-  { href: "/quote", text: "Get a Quote?" },
+  { href: "/quote", text: "About" },
+  { href: "/contact", text: "Contact" },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -48,8 +49,8 @@ const currentPath = Astro.url.pathname;
   class="h-13 shadow-md flex items-center px-4 sm:px-8 justify-between bg-[#093832] fixed top-0 left-0 right-0 z-50"
 >
   <div class="flex items-center">
-    <a href="/" aria-label="Vexo Home Page">
-      <Image src={logo} alt="Vexo Logo" class="h-16 w-16" />
+    <a href="/" aria-label="Vexo Home Page" class="block">
+      <Image src={logo} alt="Vexo Logo" class="h-10 w-auto" />
     </a>
   </div>
 
@@ -74,6 +75,12 @@ const currentPath = Astro.url.pathname;
         })
       }
     </ul>
+    <a
+      href="/quote"
+      class="font-semibold ml-5 text-lg px-3 py-1 bg-linear-to-r from-[#b69544] to-[#686749] text-white rounded-lg hover:opacity-90 transition"
+    >
+      Get Quote
+    </a>
   </nav>
 
   <!-- Mobile menu toggle button -->
